@@ -209,3 +209,4 @@ __marimo__/
 vitrea-client-ts/
 PYTHON_PORT_PLAN.md
 STEP_5_COMPLETION.md
+*.json

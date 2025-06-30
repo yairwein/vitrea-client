@@ -14,6 +14,7 @@ class KeyParameters(BaseResponse):
     KEY_ID_INDEX = 9
     CATEGORY_INDEX = 10
     DIMMER_RATIO_INDEX = 11
+    NAME_INDEX = 20
     
     def _abstract_method(self):
         """Implementation of abstract method from DataGram."""
@@ -40,10 +41,19 @@ class KeyParameters(BaseResponse):
         return self.get(self.DIMMER_RATIO_INDEX)
     
     @property
+    def name(self) -> str:
+        """Get the key name."""
+        try:
+            return self._buffer_to_string(self.NAME_INDEX).rstrip('\x00')
+        except (UnicodeDecodeError, IndexError):
+            return ""
+    
+    @property
     def _to_log(self) -> Dict[str, Any]:
         """Get additional log data for key parameters."""
         return {
             **super()._to_log,
+            "name": self.name,
             "nodeID": self.node_id,
             "keyID": self.key_id,
             "category": self.category,

@@ -67,6 +67,11 @@ class NodeMetaData(BaseResponse):
         return self.get(self.TOTAL_KEYS_INDEX)
     
     @property
+    def keys(self) -> List[int]:
+        """Get the list of key IDs."""
+        return list(range(self.total_keys))
+    
+    @property
     def keys_list(self) -> List[Dict[str, int]]:
         """Get the list of keys with their types."""
         keys = []
@@ -78,9 +83,14 @@ class NodeMetaData(BaseResponse):
         return keys
     
     @property
+    def lock_status(self) -> LockStatus:
+        """Get the lock status."""
+        return LockStatus(self._at_offset(self.RAW_LOCKED_STATE_INDEX))
+    
+    @property
     def is_locked(self) -> bool:
         """Check if the node is locked."""
-        return self._at_offset(self.RAW_LOCKED_STATE_INDEX) == LockStatus.LOCKED
+        return self.lock_status == LockStatus.LOCKED
     
     @property
     def led_level(self) -> LEDBackgroundBrightness:

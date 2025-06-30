@@ -106,7 +106,7 @@ class VitreaClient(AbstractSocket):
                 await asyncio.sleep(self.socket_config.request_timeout)
                 if not future.done():
                     error = TimeoutException("Sending timeout reached")
-                    self.log.error(error.message, request.log_data)
+                    self.log.error(str(error), request.log_data)
                     if request.event_name in self._pending_requests:
                         del self._pending_requests[request.event_name]
                     future.set_exception(error)
@@ -225,7 +225,7 @@ class VitreaClient(AbstractSocket):
             Number of rooms
         """
         response = await self.send(RoomCount())
-        return response.room_count
+        return response.total
     
     async def get_node_count(self) -> int:
         """Get the number of nodes in the system.
@@ -234,7 +234,7 @@ class VitreaClient(AbstractSocket):
             Number of nodes
         """
         response = await self.send(NodeCount())
-        return response.node_count
+        return response.total
     
     async def get_room_metadata(self, room_id: int) -> RoomMetaDataResponse:
         """Get metadata for a specific room.
