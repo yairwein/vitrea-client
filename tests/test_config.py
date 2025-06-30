@@ -85,6 +85,7 @@ class TestBaseConfigParser:
 class TestConnectionConfig:
     """Test the ConnectionConfig class."""
     
+    @patch.dict(os.environ, {}, clear=True)
     def test_create_with_defaults(self):
         """Test ConnectionConfig creation with default values."""
         config = ConnectionConfig.create()
@@ -130,6 +131,7 @@ class TestConnectionConfig:
         assert config.password == "env_pass"
         assert config.version == ProtocolVersion.V1
     
+    @patch.dict(os.environ, {}, clear=True)
     def test_create_with_none_configs(self):
         """Test ConnectionConfig creation with None configs."""
         config = ConnectionConfig.create(None)

@@ -37,4 +37,5 @@ class KeyCategory(IntEnum):
     UNDEFINED = 0
     LIGHT = 1
     FAN = 6
-    BOILER = 7 
+    BOILER = 7
+    SHADES = 255  # 0xFF - motorized shades/blinds 

@@ -84,7 +84,7 @@ class TestVitreaClientStep4:
         
         # Mock responses
         room_count_response = Mock()
-        room_count_response.room_count = 5
+        room_count_response.total = 5
         client.send.return_value = room_count_response
         
         # Test get_room_count
@@ -169,14 +169,14 @@ class TestVitreaClientStep4:
         async def mock_send_with_timeout(req, release_fn):
             # Simulate successful response
             mock_response = Mock()
-            mock_response.room_count = 5
+            mock_response.total = 5
             return mock_response
         
         client._send_with_timeout = mock_send_with_timeout
         
         # Test that send works correctly
         response = await client.send(request)
-        assert response.room_count == 5
+        assert response.total == 5
     
     @pytest.mark.asyncio
     async def test_connection_lifecycle(self, client_config):
